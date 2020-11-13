@@ -3,7 +3,7 @@ pipeline{
     environment {
 		dockerHome= tool 'mymaven'
 		mavenHome= tool 'mydocker'
-		registry = "devops0001.jfrog.io/devops0002/hello-world"
+		registry = "devops0001.jfrog.io/devops0002"
         registryCredential = 'devops0001.jfrog.io'
 		PATH = "$dockerHome/bin:$mavenHome/bin:$PATH"
 		
