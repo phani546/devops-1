@@ -47,7 +47,6 @@ pipeline{
                     echo 'customImage'
                     sh 'docker push devops0001.jfrog.io/devops0002/hello-world'
                 }  
-             )
             }
         }
     }
