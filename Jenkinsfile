@@ -37,20 +37,17 @@ pipeline{
                echo 'Starting to build docker image'
                 script {
                     def dockerfile = 'Dockerfile'
-                    def customImage = docker.build('devops0001.jfrog.io/devops0001/hello-world:latest', "-f ${dockerfile} .")
+                    def customImage = docker.build('devops0001.jfrog.io/devops0002/hello-world:latest', "-f ${dockerfile} .")
                }    
             }
         }
         stage('Push Docker Image'){
             steps{
-               rtDockerPush(
-                serverId: "devops0001.jfrog.io",
-                image: "devops0001.jfrog.io/devops0001/hello-world:latest",
-                host: 'devops0001.jfrog.io',
-                targetRepo: 'local-repo', // where to copy to (from docker-virtual)
-                // Attach custom properties to the published artifacts:
-                properties: 'project-name=hello-world;status=alpha'
-            )
+                script{
+                    echo 'customImage'
+                    sh 'docker push devops0001.jfrog.io/devops0002/hello-world'
+                }  
+             )
             }
         }
     }
