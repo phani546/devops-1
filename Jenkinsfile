@@ -45,8 +45,8 @@ pipeline{
             steps{
                 script{
                     echo 'customImage'
-                    sh 'docker tag hello-world devops0001.jfrog.io/devops0002/hello-world'
-                    sh 'docker push devops0001.jfrog.io/devops0002/hello-world'
+                    sh 'docker tag hello-world:${BUILD_NUMBER} devops0001.jfrog.io/devops0002/hello-world'
+                    sh 'docker push devops0001.jfrog.io/devops0002/hello-world:${BUILD_NUMBER}'
                 }  
             }
         }
