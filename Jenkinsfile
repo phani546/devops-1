@@ -36,8 +36,7 @@ pipeline{
             steps{
                echo 'Starting to build docker image'
                 script {
-                    def dockerfile = 'Dockerfile'
-                    def customImage = docker.build('hello-world:${BUILD_NUMBER}', "-f ${dockerfile} .")
+                    sh 'docker build -t hello-world devops0001.jfrog.io/devops0002/hello-world:${BUILD_NUMBER} .'
                }    
             }
         }
@@ -45,7 +44,6 @@ pipeline{
             steps{
                 script{
                     echo 'customImage'
-                    sh 'docker tag hello-world devops0001.jfrog.io/devops0002/hello-world:${BUILD_NUMBER}'
                     sh 'docker push devops0001.jfrog.io/devops0002/hello-world:${BUILD_NUMBER}'
                 }  
             }
