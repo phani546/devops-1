@@ -37,7 +37,7 @@ pipeline{
                echo 'Starting to build docker image'
                 script {
                     sh 'docker build -t hello-world .'
-                    sh 'docker tag hello-world devops0001.jfrog.io/devops0002/hello-world:${BUILD_NUMBER} .'
+                    sh 'docker tag hello-world devops0001.jfrog.io/devops0002/hello-world:${BUILD_NUMBER}'
                }    
             }
         }
