@@ -45,7 +45,6 @@ pipeline{
             steps{
                 script{
                     echo 'customImage'
-                    sh 'docker login devops0001.jfrog.io'
                     sh 'docker push devops0001.jfrog.io/devops0002/hello-world'
                 }  
             }
