@@ -39,8 +39,8 @@ pipeline{
             steps{
                echo 'Starting to build docker image'
                 script {
-                    def dockerfile = 'Dockerfile'
-	           def dockerImage = docker.build registry + ":$BUILD_NUMBER","-f ${dockerfile} .")
+                    //def dockerfile = 'Dockerfile'
+	           def dockerImage = docker.build registry + ":$BUILD_NUMBER"
 					
                }    
             }
