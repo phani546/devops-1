@@ -3,7 +3,10 @@ pipeline{
     environment {
 		dockerHome= tool 'mymaven'
 		mavenHome= tool 'mydocker'
+		registry = "devops0001.jfrog.io/devops0002/hello-world"
+        registryCredential = 'devops0001.jfrog.io'
 		PATH = "$dockerHome/bin:$mavenHome/bin:$PATH"
+		
 	}
     stages{
         stage(Checkout){
@@ -36,14 +39,18 @@ pipeline{
             steps{
                echo 'Starting to build docker image'
                 script {
-                    sh 'docker build -t hello-world .'
-                    sh 'docker tag hello-world devops0001.jfrog.io/devops0002/hello-world:${BUILD_NUMBER}'
+                    def dockerfile = 'Dockerfile'
+					dockerImage = docker.build registry + ":$BUILD_NUMBER","-f ${dockerfile} .")
+					
+                    #def customImage = docker.build('hello-world:${BUILD_NUMBER}', "-f ${dockerfile} .")
                }    
             }
         }
         stage('Push Docker Image'){
             steps{
                 script{
+                    echo 'customImage'
+                    sh 'docker tag hello-world:${BUILD_NUMBER} devops0001.jfrog.io/devops0002/hello-world'
                     sh 'docker push devops0001.jfrog.io/devops0002/hello-world:${BUILD_NUMBER}'
                 }  
             }
