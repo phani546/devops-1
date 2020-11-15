@@ -11,13 +11,13 @@ pipeline{
     stages{
         stage(Checkout){
           steps{
-              sh 'mvn --version'
+              //sh 'mvn --version'
               sh 'docker version'
           }
         }
         stage('Build'){
             steps{
-                sh 'mvn clean compile'
+                //sh 'mvn clean compile'
             }
         }
         stage('Test'){
