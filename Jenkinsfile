@@ -39,13 +39,13 @@ pipeline{
                     sh 'docker build -t hello-world .'
                     sh 'docker tag hello-world devops0001.jfrog.io/devops0002/hello-world:${BUILD_NUMBER}'
                     rtServer (
-                        id: 'Artifactory-1',
+                        id: 'devops0002',
                         url: 'http://devops0001.jfrog.io/artifactory',
                         credentialsId: 'devops0001.jfrog.io',
                     )
  
                     rtDockerPush(
-                        serverId: 'Artifactory-1',
+                        serverId: 'devops0002',
                         image: ARTIFACTORY_DOCKER_REGISTRY + '/hello-world:${BUILD_NUMBER}',
                         host: 'devops0001.jfrog.io',
                         targetRepo: 'docker-local',
@@ -55,7 +55,7 @@ pipeline{
                         javaArgs: '-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005'
                     )
                      rtPublishBuildInfo (
-                       serverId: 'Artifactory-1'
+                       serverId: 'devops0002'
                     )
                }    
             }
