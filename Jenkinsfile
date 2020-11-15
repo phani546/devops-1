@@ -15,11 +15,6 @@ pipeline{
               sh 'docker version'
           }
         }
-        stage('Build'){
-            steps{
-                //sh 'mvn clean compile'
-            }
-        }
         stage('Test'){
             steps{
                 echo 'Test Here'
