@@ -47,7 +47,7 @@ pipeline{
                     rtDockerPush(
                         serverId: 'devops0002',
                         image: 'devops0001.jfrog.io/devops0002/hello-world:${BUILD_NUMBER}',
-                        host: 'devops0001.jfrog.io',
+                        host: null,
                         targetRepo: 'docker-local',
                         properties: 'project-name=hello-world;status=stable',
                         buildName: 'hello-world',
