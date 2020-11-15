@@ -11,4 +11,5 @@ ENV ENV=${ENV}
 COPY   *.properties  /
 EXPOSE 8090
 COPY --from=build /home/app/target/*.jar app.jar
-ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar  /app.jar --spring.config.location=classpath:/application-$ENV.properties"]
+
+ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar  /app.jar --spring.config.location=classpath:/application-sbx.properties"]
