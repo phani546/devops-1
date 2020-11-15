@@ -32,22 +32,41 @@ pipeline{
                 sh 'mvn package -DskipTests'
            }
         }
-        stage('Build Image'){
+        stage('Build and Push'){
             steps{
                echo 'Starting to build docker image'
                 script {
                     sh 'docker build -t hello-world .'
                     sh 'docker tag hello-world devops0001.jfrog.io/devops0002/hello-world:${BUILD_NUMBER}'
+                    rtServer (
+                        id: 'Artifactory-1',
+                        url: 'http://devops0001.jfrog.io/artifactory',
+                        credentialsId: 'devops0001.jfrog.io',
+                    )
+ 
+                    rtDockerPush(
+                        serverId: 'Artifactory-1',
+                        image: ARTIFACTORY_DOCKER_REGISTRY + '/hello-world:${BUILD_NUMBER}',
+                        host: 'devops0001.jfrog.io',
+                        targetRepo: 'docker-local',
+                        properties: 'project-name=hello-world;status=stable',
+                        buildName: 'hello-world',
+                        buildNumber: '${BUILD_NUMBER}', 
+                        javaArgs: '-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005'
+                    )
+                     rtPublishBuildInfo (
+                       serverId: 'Artifactory-1'
+                    )
                }    
             }
         }
-        stage('Push Docker Image'){
-            steps{
-                script{
-                    sh 'docker push devops0001.jfrog.io/devops0002/hello-world:${BUILD_NUMBER}'
-                }  
-            }
-        }
+        // stage('Push Docker Image'){
+        //     steps{
+        //         script{
+        //             sh 'docker push devops0001.jfrog.io/devops0002/hello-world:${BUILD_NUMBER}'
+        //         }  
+        //     }
+        // }
     }
     post{
 		always{
